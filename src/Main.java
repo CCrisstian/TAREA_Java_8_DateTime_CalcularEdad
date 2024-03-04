@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,7 +8,7 @@ public class Main {
         int year_Ingresado, month_Ingresado, day_Ingresado;
         LocalDate fecha_Ingresada;
         LocalDate fecha_Actual = LocalDate.now();
-        int edad;
+        long edad;
         boolean entradaInvalida = true;
 
         while (entradaInvalida) {
@@ -20,17 +21,9 @@ public class Main {
                 day_Ingresado = Integer.parseInt(input);
                 fecha_Ingresada = LocalDate.of(year_Ingresado, month_Ingresado, day_Ingresado);
 
-                edad = fecha_Actual.getYear() - fecha_Ingresada.getYear();
-                fecha_Ingresada = fecha_Ingresada.withYear(fecha_Actual.getYear());
-                StringBuilder mensaje = new StringBuilder("Tu edad es: ");
-
-                if (fecha_Actual.isBefore(fecha_Ingresada)){
-                    mensaje.append(edad-1);
-                    JOptionPane.showMessageDialog(null, mensaje, "Tarea: Calcular edad", JOptionPane.INFORMATION_MESSAGE);
-                }else {
-                    mensaje.append(edad);
-                    JOptionPane.showMessageDialog(null, mensaje, "Tarea: Calcular edad", JOptionPane.INFORMATION_MESSAGE);
-                }
+                edad = ChronoUnit.YEARS.between(fecha_Ingresada, fecha_Actual);
+                StringBuilder mensaje = new StringBuilder("Tu edad es: ").append(edad);
+                JOptionPane.showMessageDialog(null, mensaje, "Tarea: Calcular edad", JOptionPane.INFORMATION_MESSAGE);
 
                 entradaInvalida = false; // Si llega aquí, la conversión fue exitosa
             } catch (NumberFormatException e) {
